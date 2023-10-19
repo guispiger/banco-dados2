@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Posto de Saúde Web</title>
+</head>
+
+<body>
+	<h1>Cadastrar Especialidades</h1>
+
+	<form method="POST" action="cadastrarEspecialidade">
+		<input type="text" name="descricao" required />
+		<input type="submit" value="cadastrar" />
+	</form>
+
+	<form method="GET" action="listarEspecialidades">
+		<input value="Especialidades Cadastradas" type="submit" />
+	</form>
+
+	<form method="GET" action="index">
+		<input value="Início" type="submit" />
+	</form>
+</body>
+
+</html>

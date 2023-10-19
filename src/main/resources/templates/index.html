@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Posto de Saúde Web</title>
+</head>
+
+<body>
+	<h1>Bem vindo ao Posto de Saúde Web</h1>
+
+	<div style="border: 5px dotted black; margin-bottom: 20px; text-align: center;">
+		<h2>Principal</h2>
+
+		<h3>Pacientes</h3>
+		<form method="GET" action="cadastrarPaciente">
+			<input value="Cadastrar Paciente" type="submit" />
+		</form>
+		<form method="GET" action="listarPacientes">
+			<input value="Pacientes Cadastrados" type="submit" />
+		</form>
+
+		<h3>Médicos</h3>
+		<form method="GET" action="cadastrarMedico">
+			<input value="Cadastrar Médico" type="submit" />
+		</form>
+		<form method="GET" action="listarMedicos">
+			<input value="Médicos Cadastrados" type="submit" />
+		</form>
+
+		<h3>Consultas</h3>
+		<form method="GET" action="cadastrarConsulta">
+			<input value="Cadastrar Consulta" type="submit" />
+		</form>
+		<form method="GET" action="listarConsultas">
+			<input value="Consultas Cadastradas" type="submit" />
+		</form>
+	</div>
+
+
+
+	<div style="border: 5px solid black; text-align: center;">
+		<h2>Utilitários</h2>
+
+		<h3>Bairros</h3>
+		<form method="GET" action="cadastrarbairro">
+			<input value="Cadastrar Bairro" type="submit" />
+		</form>
+		<form method="GET" action="listarbairros">
+			<input value="Bairros Cadastrados" type="submit" />
+		</form>
+
+		<h3>Especialidades</h3>
+		<form method="GET" action="cadastrarEspecialidade">
+			<input value="Cadastrar Especialidades" type="submit" />
+		</form>
+		<form method="GET" action="listarEspecialidades">
+			<input value="Especialidades Cadastradas" type="submit" />
+		</form>
+	</div>
+
+
+
+</body>
+
+</html>

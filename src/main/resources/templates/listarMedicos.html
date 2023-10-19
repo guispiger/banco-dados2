@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Posto de Saúde Web</title>
+
+	<style>
+		table,
+		td {
+			border: 1px solid black;
+		}
+	</style>
+
+</head>
+
+<body>
+	<h1>Pacientes cadastrados</h1>
+
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>Nome</th>
+			<th>Sobrenome</th>
+			<th>Telefone</th>
+			<th>CRM</th>
+			<th>CPF</th>
+			<th>Especialidade</th>
+		</tr>
+		<tr th:each="medico : ${medicos}">
+			<td th:text="${medico.idMedico}"></td>
+			<td th:text="${medico.nome}"></td>
+			<td th:text="${medico.sobrenome}"></td>
+			<td th:text="${medico.telefone}"></td>
+			<td th:text="${medico.crm}"></td>
+			<td th:text="${medico.cpf}"></td>
+			<td th:text="${medico.especialidade.descricao}"></td>
+
+		</tr>
+	</table>
+
+	<form method="GET" action="cadastrarMedico">
+		<input value="Cadastrar Médico" type="submit" />
+	</form>
+
+	<form method="GET" action="index">
+		<input value="Início" type="submit" />
+	</form>
+
+
+</body>
+
+</html>

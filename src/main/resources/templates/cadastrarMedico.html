@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Posto de Saúde Web</title>
+</head>
+<style>
+	label {
+		display: inline-block;
+		float: left;
+		clear: left;
+		width: 150px;
+		text-align: right;
+	}
+
+	input,
+	select {
+		display: inline-block;
+		float: left;
+	}
+</style>
+
+<body>
+	<h1>Cadastrar Médico</h1>
+
+	<form method="POST" action="cadastrarMedico">
+		<label>Nome:</label>
+		<input type="text" name="nome" /> <br>
+
+		<label>Sobrenome:</label>
+		<input type="text" name="sobrenome" /> <br>
+
+		<label>Telefone:</label>
+		<input type="text" name="telefone" /> <br>
+
+		<label>CRM:</label>
+		<input type="text" name="crm" /> <br>
+
+		<label>CPF:</label>
+		<input type="text" name="cpf" /> <br>
+
+		<label>Especialidade:</label>
+		<select name="especialidade.idEspecialidade" required>
+			<option value="">Escolha uma especialidade</option>
+			<option th:each="especialidade : ${especialidades}" th:value="${especialidade.idEspecialidade}"
+				th:text="${especialidade.descricao}"></option>
+		</select>
+
+		<input type="submit" value="cadastrar" />
+	</form>
+
+	<br>
+	<br>
+	<br>
+	<br>
+	<form method="GET" action="listarMedicos">
+		<input value="Médicos Cadastrados" type="submit" />
+	</form>
+
+	<br>
+	<br>
+
+	<form method="GET" action="index">
+		<input value="Início" type="submit" />
+	</form>
+
+</body>
+
+</html>

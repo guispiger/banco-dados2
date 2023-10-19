@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Posto de Saúde Web</title>
+</head>
+<style>
+	label {
+		display: inline-block;
+		float: left;
+		clear: left;
+		width: 150px;
+		text-align: right;
+	}
+
+	input,
+	select {
+		display: inline-block;
+		float: left;
+	}
+
+	span {
+		color: red;
+		font-weight: bold;
+	}
+</style>
+
+<body>
+	<h1>Cadastrar Consulta</h1>
+
+	<span th:if="${not #strings.isEmpty(mensagem)}" th:text="${mensagem}"></span>
+
+	<form method="POST" action="cadastrarConsulta">
+		<label>Paciente:</label>
+		<select name="paciente.id" required>
+			<option value="">Escolha um paciente</option>
+			<option th:each="paciente : ${pacientes}" th:value="${paciente.id}"
+				th:text="${paciente.nome + ' ' + paciente.sobrenome}"></option>
+		</select>
+		<br>
+
+		<label>Médico:</label>
+		<select name="medico.idMedico" required>
+			<option value="">Escolha uma Médico</option>
+			<option th:each="medico : ${medicos}" th:value="${medico.idMedico}"
+				th:text="${consulta.medico.idMedico == medico.idMedico}"></option>
+		</select>
+		<br>
+
+		<label>Data e Horário:</label>
+		<input type="datetime-local" name="dataHora"
+			th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd''T''HH:mm')}" /> <br>
+
+
+		<input type="submit" value="cadastrar" />
+	</form>
+
+	<br>
+	<br>
+	<br>
+	<br>
+	<form method="GET" action="listarConsultas">
+		<input value="Consultas Cadastradas" type="submit" />
+	</form>
+
+	<br>
+	<br>
+
+	<form method="GET" action="index">
+		<input value="Início" type="submit" />
+	</form>
+
+</body>
+
+</html>

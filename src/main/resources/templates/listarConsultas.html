@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Posto de Saúde Web</title>
+
+	<style>
+		table,
+		td {
+			border: 1px solid black;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Pacientes cadastrados</h1>
+
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>Data e Hora</th>
+			<th>Situação</th>
+			<th>Paciente</th>
+			<th>Médico</th>
+			<th>Ações</th>
+		</tr>
+		<tr th:each="consulta : ${consultas}">
+			<td th:text="${consulta.idConsulta}"></td>
+			<td th:text="${consulta.dataHora}"></td>
+			<td th:text="${consulta.situacao}"></td>
+			<td th:text="${consulta.paciente.nome + ' ' + consulta.paciente.sobrenome}"></td>
+			<td th:text="${consulta.medico.crm + '-' + consulta.medico.nome + ' ' + consulta.medico.sobrenome}"></td>
+			<td>
+				<form method="GET" action="atualizarConsulta">
+					<input th:value="${consulta.idConsulta}" name="id" type="hidden">
+					<input value="Atualizar" type="submit" />
+				</form>
+				<form method="POST" action="removerConsulta">
+					<input th:value="${consulta.idConsulta}" name="id" type="hidden">
+					<input value="Remover" type="submit" />
+				</form>
+			</td>
+		</tr>
+	</table>
+
+	<form method="GET" action="cadastrarConsulta">
+		<input value="Cadastrar Consulta" type="submit" />
+	</form>
+
+	<form method="GET" action="index">
+		<input value="Início" type="submit" />
+	</form>
+
+
+</body>
+
+</html>

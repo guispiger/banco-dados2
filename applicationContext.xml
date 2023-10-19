@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/tx https://www.springframework.org/schema/tx/spring-tx.xsd
+						http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+	<bean id="MysqlBairroDAO" primary="true"
+		class="br.edu.utfpr.td.tsi.posto.saude.dao.MysqlBairroDAO"></bean>
+
+	<bean id="MysqlEnderecoDAO" primary="true"
+		class="br.edu.utfpr.td.tsi.posto.saude.dao.MysqlEnderecoDAO"></bean>
+
+	<bean id="MysqlPacienteDAO" primary="true"
+		class="br.edu.utfpr.td.tsi.posto.saude.dao.MysqlPacienteDAO"></bean>
+
+	<bean id="MysqlMedicoDAO" primary="true"
+		class="br.edu.utfpr.td.tsi.posto.saude.dao.MysqlMedicoDAO"></bean>
+
+	<bean id="MysqlEspecialidadeDAO" primary="true"
+		class="br.edu.utfpr.td.tsi.posto.saude.dao.MysqlEspecialidadeDAO"></bean>
+
+	<bean id="MysqlConsultaDAO" primary="true"
+		class="br.edu.utfpr.td.tsi.posto.saude.dao.MysqlConsultaDAO"></bean>
+
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName"
+			value="com.mysql.cj.jdbc.Driver" />
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/posto_saude" />
+		<property name="username" value="aluno" />
+		<property name="password" value="teste$123" />
+	</bean>
+
+</beans>

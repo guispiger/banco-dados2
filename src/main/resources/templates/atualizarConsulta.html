@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Posto de Saúde Web</title>
+</head>
+<style>
+	label {
+		display: inline-block;
+		float: left;
+		clear: left;
+		width: 150px;
+		text-align: right;
+	}
+
+	input,
+	select {
+		display: inline-block;
+		float: left;
+	}
+
+	span {
+		color: red;
+		font-weight: bold;
+	}
+</style>
+
+<body>
+	<h1>Atualizar Consulta</h1>
+
+	<form method="POST" action="atualizarConsulta">
+
+		<label>Paciente:</label>
+		<select name="paciente.id" required>
+			<option value="">Escolha um paciente</option>
+			<option th:each="paciente : ${pacientes}" th:value="${paciente.id}"
+				th:text="${paciente.nome + ' ' + paciente.sobrenome}" th:selected="
+				${consulta.paciente.id == paciente.id}"></option>
+		</select>
+		<br>
+
+		<label>Médico:</label>
+		<select name="medico.idMedico" required>
+			<option value="">Escolha uma Médico</option>
+			<option th:each="medico : ${medicos}" th:value="${medico.idMedico}"
+				th:text="${medico.crm + '-' + medico.nome}"
+				th:selected="${consulta.medico.idMedico == medico.idMedico}"></option>
+		</select>
+		<br>
+
+		<label>Data e Horário:</label>
+		<input type="datetime-local" name="dataHora" th:field="${consulta.dataHora}" /> <br>
+
+		<label>Situação:</label>
+		<select name="situacao" required>
+			<option value="agendada">Agendada</option>
+			<option value="cancelada">Cancelada</option>
+			<option value="realizada">Realizada</option>
+		</select>
+
+		<input th:value="${consulta.idConsulta}" name="idConsulta" type="hidden">
+		<input type="submit" value="cadastrar" />
+	</form>
+
+	<br>
+	<br>
+	<br>
+	<br>
+	<form method="GET" action="listarConsultas">
+		<input value="Consultas Cadastradas" type="submit" />
+	</form>
+
+	<br>
+	<br>
+
+	<form method="GET" action="index">
+		<input value="Início" type="submit" />
+	</form>
+
+</body>
+
+</html>

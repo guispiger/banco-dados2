@@ -1,23 +1,34 @@
 package br.edu.utfpr.td.tsi.posto.saude.modelo;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "especialidade", schema = "posto_saude")
 public class Especialidade {
-	private Long idEspecialidade;
+	@Id
+	@Column(name = "idEspecialidade", nullable = false, unique = true)
+	private String idEspecialidade;
+
+	@Column(name = "descricao", nullable = false, length = 100)
 	private String descricao;
-	
+
 	public Especialidade() {
 	}
 
-	public Especialidade(Long idEspecialidade, String descricao) {
+	public Especialidade(String idEspecialidade, String descricao) {
 		super();
 		this.idEspecialidade = idEspecialidade;
 		this.descricao = descricao;
 	}
 
-	public Long getIdEspecialidade() {
+	public String getIdEspecialidade() {
 		return idEspecialidade;
 	}
 
-	public void setIdEspecialidade(Long idEspecialidade) {
+	public void setIdEspecialidade(String idEspecialidade) {
 		this.idEspecialidade = idEspecialidade;
 	}
 

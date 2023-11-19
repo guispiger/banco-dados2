@@ -41,7 +41,7 @@
 		<input type="text" name="cpf" /> <br>
 
 		<label>Especialidade:</label>
-		<select name="especialidade.idEspecialidade" required>
+		<select name="especialidade" required>
 			<option value="">Escolha uma especialidade</option>
 			<option th:each="especialidade : ${especialidades}" th:value="${especialidade.idEspecialidade}"
 				th:text="${especialidade.descricao}"></option>

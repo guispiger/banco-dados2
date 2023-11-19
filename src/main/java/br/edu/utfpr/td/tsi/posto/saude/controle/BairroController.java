@@ -8,18 +8,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import br.edu.utfpr.td.tsi.posto.saude.dao.BairroDAO;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Bairro;
+import br.edu.utfpr.td.tsi.posto.saude.service.BairroService;
 
 @Controller
 public class BairroController {
 
 	@Autowired
-	BairroDAO bairroDAO;
+	private BairroService bairroService;
 
 	@GetMapping(value = "/listarbairros")
 	public String listar(Model model) {
-		List<Bairro> bairros = bairroDAO.listarTodos();
+		List<Bairro> bairros = bairroService.listarTodos();
 		model.addAttribute("bairros", bairros);	
 		return "listarBairros";
 	}
@@ -31,13 +31,13 @@ public class BairroController {
 
 	@PostMapping("/cadastrarBairro")
 	public String cadastrar(Bairro bairro) {
-		bairroDAO.inserir(bairro);
+		bairroService.inserir(bairro);
 		return "redirect:/listarbairros";
 	}
 	
 	@PostMapping("/removerBairro")
 	public String remover(Bairro bairro) {
-		bairroDAO.remover(bairro);
+		bairroService.remover(bairro);
 		return "redirect:/listarbairros";
 	}
 

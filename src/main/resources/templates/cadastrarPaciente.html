@@ -47,7 +47,7 @@
 		<input type="text" name="endereco.cep" />
 
 		<label>Bairro:</label>
-		<select name="endereco.bairro.id" required>
+		<select name="endereco.bairro" required>
 			<option value="">Escolha um bairro</option>
 			<option th:each="bairro : ${bairros}" th:value="${bairro.id}" th:text="${bairro.nome}"></option>
 		</select>

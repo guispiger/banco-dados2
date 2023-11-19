@@ -1,10 +1,10 @@
-package br.edu.utfpr.td.tsi.posto.saude.dao;
+package br.edu.utfpr.td.tsi.posto.saude.service;
 
 import java.util.List;
 
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Especialidade;
 
-public interface EspecialidadeDAO {
+public interface EspecialideService {
 	public void inserir(Especialidade especialidade);
 
 	public void atualizar(Especialidade especialidade);
@@ -14,5 +14,4 @@ public interface EspecialidadeDAO {
 	public List<Especialidade> listarTodos();
 	
 	public Especialidade procurar(String id);
-
 }

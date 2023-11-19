@@ -1,15 +1,25 @@
 package br.edu.utfpr.td.tsi.posto.saude.modelo;
 
-public class Bairro {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-	private Long id;
+@Entity
+@Table(name = "bairro", schema = "posto_saude")
+public class Bairro {
+	@Id
+	@Column(name = "idBairro", nullable = false, unique = true)
+	private String id;
+
+	@Column(name = "nome", length = 255, nullable = false)
 	private String nome;
 
 	public Bairro() {
 
 	}
 
-	public Bairro(Long id, String nome) {
+	public Bairro(String id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -17,14 +27,14 @@ public class Bairro {
 
 	@Override
 	public String toString() {
-		return  nome;
+		return nome;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

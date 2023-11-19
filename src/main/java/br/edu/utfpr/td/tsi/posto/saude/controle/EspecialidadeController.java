@@ -8,18 +8,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import br.edu.utfpr.td.tsi.posto.saude.dao.EspecialidadeDAO;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Especialidade;
+import br.edu.utfpr.td.tsi.posto.saude.service.EspecialideService;
 
 @Controller
 public class EspecialidadeController {
 	
 	@Autowired
-	EspecialidadeDAO especialidadeDAO;
+	EspecialideService especialidadeService;
 	
 	@GetMapping(value = "/listarEspecialidades")
 	public String listarEspecialidades(Model model) {
-		List<Especialidade> especialidades = especialidadeDAO.listarTodos();
+		List<Especialidade> especialidades = especialidadeService.listarTodos();
 		model.addAttribute("especialidades", especialidades);
 		return "listarEspecialidades";
 	}
@@ -31,7 +31,7 @@ public class EspecialidadeController {
 	
 	@PostMapping(value = "/cadastrarEspecialidade")
 	public String cadastrarEspecialidade(Especialidade especialidade) {
-		especialidadeDAO.inserir(especialidade);		
+		especialidadeService.inserir(especialidade);		
 		return "redirect:/listarEspecialidades";
 	}
 

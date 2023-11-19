@@ -2,20 +2,42 @@ package br.edu.utfpr.td.tsi.posto.saude.modelo;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
+@Entity
+@Table(name = "consulta", schema = "posto_saude")
 public class Consulta {
-	private Long idConsulta;
+	@Id
+	@Column(name = "idConsulta", nullable = false, unique = true)
+	private String idConsulta;
+
+	@Column(name = "dataHora", nullable = false)
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private LocalDateTime dataHora;
+
+	@Column(name = "situacao", length = 45, nullable = false)
 	private String situacao;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "pacienteID", referencedColumnName = "idPaciente")
 	private Paciente paciente;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "medicoID", referencedColumnName = "idMedico")
 	private Medico medico;
 
 	public Consulta() {
 	}
 
-	public Consulta(Long idConsulta, LocalDateTime dataHora, String situacao, Paciente paciente, Medico medico) {
+	public Consulta(String idConsulta, LocalDateTime dataHora, String situacao, Paciente paciente, Medico medico) {
 		super();
 		this.idConsulta = idConsulta;
 		this.dataHora = dataHora;
@@ -24,11 +46,11 @@ public class Consulta {
 		this.medico = medico;
 	}
 
-	public Long getIdConsulta() {
+	public String getIdConsulta() {
 		return idConsulta;
 	}
 
-	public void setIdConsulta(Long idConsulta) {
+	public void setIdConsulta(String idConsulta) {
 		this.idConsulta = idConsulta;
 	}
 

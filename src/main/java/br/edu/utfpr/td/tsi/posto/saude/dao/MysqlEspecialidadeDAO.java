@@ -20,11 +20,12 @@ public class MysqlEspecialidadeDAO implements EspecialidadeDAO {
 
 	@Override
 	public void inserir(Especialidade especialidade) {
-		String sql = "insert into especialidade (descricao) values (?)";
+		String sql = "insert into especialidade (idEspecialidade, descricao) values (?, ?)";
 		try {
 			Connection conn = dataSource.getConnection();
 			PreparedStatement preparedStatement = conn.prepareStatement(sql);
-
+			
+			preparedStatement.setString(1, especialidade.getIdEspecialidade());
 			preparedStatement.setString(1, especialidade.getDescricao());
 			preparedStatement.executeUpdate();
 
@@ -56,7 +57,7 @@ public class MysqlEspecialidadeDAO implements EspecialidadeDAO {
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("select idEspecialidade, descricao from especialidade");
 			while (rs.next()) {
-				Long id = rs.getLong(1);
+				String id = rs.getString(1);
 				String descricao = rs.getString(2);
 				especialidades.add(new Especialidade(id, descricao));
 			}
@@ -69,18 +70,18 @@ public class MysqlEspecialidadeDAO implements EspecialidadeDAO {
 	}
 
 	@Override
-	public Especialidade procurar(Long idEspecialidade) {
+	public Especialidade procurar(String idEspecialidade) {
 		Especialidade especialidade = null;
 		String sql = "select idEspecialidade, descricao from especialidade where idEspecialidade = ?";
 		try {
 			Connection conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setLong(1, idEspecialidade);
+			ps.setString(1, idEspecialidade);
 
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
-				Long id = rs.getLong(1);
+				String id = rs.getString(1);
 				String descricao = rs.getString(2);
 
 				especialidade = new Especialidade(id, descricao);

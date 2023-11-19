@@ -1,18 +1,44 @@
 package br.edu.utfpr.td.tsi.posto.saude.modelo;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "medico", schema = "posto_saude")
 public class Medico {
-	private Long idMedico;
+	@Id
+	@Column(name = "idMedico", nullable = false, unique = true)
+	private String idMedico;
+
+	@Column(name = "nome", length = 255)
 	private String nome;
+
+	@Column(name = "sobrenome", length = 45)
 	private String sobrenome;
+
+	@Column(name = "telefone", length = 45)
 	private String telefone;
+
+	@Column(name = "crm", length = 45)
 	private String crm;
+
+	@Column(name = "cpf", length = 45)
 	private String cpf;
+
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "especialidadeId", referencedColumnName = "idEspecialidade")
 	private Especialidade especialidade;
-	
+
 	public Medico() {
 	}
 
-	public Medico(Long idMedico, String nome, String sobrenome, String telefone, String crm, String cpf,
+	public Medico(String idMedico, String nome, String sobrenome, String telefone, String crm, String cpf,
 			Especialidade especialidade) {
 		super();
 		this.idMedico = idMedico;
@@ -23,8 +49,6 @@ public class Medico {
 		this.cpf = cpf;
 		this.especialidade = especialidade;
 	}
-	
-	
 
 	@Override
 	public String toString() {
@@ -32,11 +56,11 @@ public class Medico {
 				+ ", crm=" + crm + ", cpf=" + cpf + ", especialidade=" + especialidade + "]";
 	}
 
-	public Long getIdMedico() {
+	public String getIdMedico() {
 		return idMedico;
 	}
 
-	public void setIdMedico(Long idMedico) {
+	public void setIdMedico(String idMedico) {
 		this.idMedico = idMedico;
 	}
 

@@ -29,16 +29,17 @@ public class MysqlConsultaDAO implements ConsultaDAO {
 	private MedicoDAO medicoDAO;
 
 	@Override
-	public void inserir(Consulta consulta, Long idPaciente, Long idMedico) {
-		String sql = "insert into consulta (dataHora, situacao, pacienteID, medicoID) values (?, ?, ?, ?)";
+	public void inserir(Consulta consulta) {
+		String sql = "insert into consulta (idConsulta, dataHora, situacao, pacienteID, medicoID) values (?, ?, ?, ?, ?)";
 		try {
 			Connection conn = dataSource.getConnection();
 			PreparedStatement preparedStatement = conn.prepareStatement(sql);
-
-			preparedStatement.setTimestamp(1, Timestamp.valueOf(consulta.getDataHora()));
-			preparedStatement.setString(2, consulta.getSituacao());
-			preparedStatement.setLong(3, idPaciente);
-			preparedStatement.setLong(4, idMedico);
+			
+			preparedStatement.setString(1, consulta.getIdConsulta());
+			preparedStatement.setTimestamp(2, Timestamp.valueOf(consulta.getDataHora()));
+			preparedStatement.setString(3, consulta.getSituacao());
+			preparedStatement.setString(4, consulta.getPaciente().getId());
+			preparedStatement.setString(5, consulta.getMedico().getIdMedico());
 			preparedStatement.executeUpdate();
 
 			conn.close();
@@ -50,7 +51,7 @@ public class MysqlConsultaDAO implements ConsultaDAO {
 	}
 
 	@Override
-	public void atualizar(Consulta consulta, Long idPaciente, Long idMedico) {
+	public void atualizar(Consulta consulta) {
 		String sql = "update consulta set dataHora = ?, situacao = ?, pacienteID = ?, medicoID = ? where idConsulta = ?";
 		try {
 			Connection conn = dataSource.getConnection();
@@ -58,9 +59,9 @@ public class MysqlConsultaDAO implements ConsultaDAO {
 
 			preparedStatement.setTimestamp(1, Timestamp.valueOf(consulta.getDataHora()));
 			preparedStatement.setString(2, consulta.getSituacao());
-			preparedStatement.setLong(3, idPaciente);
-			preparedStatement.setLong(4, idMedico);
-			preparedStatement.setLong(5, consulta.getIdConsulta());
+			preparedStatement.setString(3, consulta.getPaciente().getId());
+			preparedStatement.setString(4, consulta.getMedico().getIdMedico());
+			preparedStatement.setString(5, consulta.getIdConsulta());
 			preparedStatement.executeUpdate();
 
 			conn.close();
@@ -72,13 +73,13 @@ public class MysqlConsultaDAO implements ConsultaDAO {
 	}
 
 	@Override
-	public void remover(Long id) {
+	public void remover(Consulta consulta) {
 		String sql = "delete from consulta where idConsulta = ?";
 		try {
 			Connection conn = dataSource.getConnection();
 			PreparedStatement preparedStatement = conn.prepareStatement(sql);
 
-			preparedStatement.setLong(1, id);
+			preparedStatement.setString(1, consulta.getIdConsulta());
 			preparedStatement.executeUpdate();
 
 			conn.close();
@@ -98,12 +99,12 @@ public class MysqlConsultaDAO implements ConsultaDAO {
 			ResultSet rs = stmt
 					.executeQuery("select idConsulta, dataHora, situacao, pacienteID, medicoID from consulta");
 			while (rs.next()) {
-				Long id = rs.getLong(1);
+				String id = rs.getString(1);
 				LocalDateTime dataHora = LocalDateTime.parse(rs.getTimestamp(2).toString(),
 						DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss.n"));
 				String situacao = rs.getString(3);
-				Long pacienteID = rs.getLong(4);
-				Long medicoID = rs.getLong(5);
+				String pacienteID = rs.getString(4);
+				String medicoID = rs.getString(5);
 
 				Paciente paciente = pacienteDAO.procurar(pacienteID);
 
@@ -121,22 +122,22 @@ public class MysqlConsultaDAO implements ConsultaDAO {
 	}
 
 	@Override
-	public Consulta procurar(Long id) {
+	public Consulta procurar(String id) {
 		Consulta consulta = null;
 		try {
 			Connection conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(
 					"select idConsulta, dataHora, situacao, pacienteID, medicoID from consulta where idConsulta = ?");
-			ps.setLong(1, id);
+			ps.setString(1, id);
 
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				Long idConsulta = rs.getLong(1);
+				String idConsulta = rs.getString(1);
 				LocalDateTime dataHora = LocalDateTime.parse(rs.getTimestamp(2).toString(),
 						DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss.n"));
 				String situacao = rs.getString(3);
-				Long pacienteID = rs.getLong(4);
-				Long medicoID = rs.getLong(5);
+				String pacienteID = rs.getString(4);
+				String medicoID = rs.getString(5);
 
 				Paciente paciente = pacienteDAO.procurar(pacienteID);
 
@@ -154,22 +155,22 @@ public class MysqlConsultaDAO implements ConsultaDAO {
 	}
 
 	@Override
-	public List<Consulta> procurarPorPaciente(Long idPaciente) {
+	public List<Consulta> procurarPorPaciente(Paciente p) {
 		ArrayList<Consulta> consultas = new ArrayList<>();
 		try {
 			Connection conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(
 					"select idConsulta, dataHora, situacao, pacienteID, medicoID from consulta where pacienteID = ?");
-			ps.setLong(1, idPaciente);
+			ps.setString(1, p.getId());
 
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				Long id = rs.getLong(1);
+				String id = rs.getString(1);
 				LocalDateTime dataHora = LocalDateTime.parse(rs.getTimestamp(2).toString(),
 						DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss.n"));
 				String situacao = rs.getString(3);
-				Long pacienteID = rs.getLong(4);
-				Long medicoID = rs.getLong(5);
+				String pacienteID = rs.getString(4);
+				String medicoID = rs.getString(5);
 
 				Paciente paciente = pacienteDAO.procurar(pacienteID);
 

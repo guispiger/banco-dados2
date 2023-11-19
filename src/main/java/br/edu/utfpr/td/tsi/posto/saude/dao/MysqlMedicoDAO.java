@@ -18,24 +18,24 @@ public class MysqlMedicoDAO implements MedicoDAO {
 
 	@Autowired
 	private DataSource dataSource;
-	
+
 	@Autowired
 	private EspecialidadeDAO especialidadeDAO;
-	
 
 	@Override
 	public void inserir(Medico medico) {
-		String sql = "insert into medico (nome, sobrenome, telefone, crm, cpf, EspecialidadeId) values (?, ?, ?, ?, ?, ?)";
+		String sql = "insert into medico (idMedico, nome, sobrenome, telefone, crm, cpf, EspecialidadeId) values (?, ?, ?, ?, ?, ?, ?)";
 		try {
 			Connection conn = dataSource.getConnection();
 			PreparedStatement preparedStatement = conn.prepareStatement(sql);
 
-			preparedStatement.setString(1, medico.getNome());
-			preparedStatement.setString(2, medico.getSobrenome());
-			preparedStatement.setString(3, medico.getTelefone());
-			preparedStatement.setString(4, medico.getCrm());
-			preparedStatement.setString(5, medico.getCpf());
-			preparedStatement.setLong(6, medico.getEspecialidade().getIdEspecialidade());
+			preparedStatement.setString(1, medico.getIdMedico());
+			preparedStatement.setString(2, medico.getNome());
+			preparedStatement.setString(3, medico.getSobrenome());
+			preparedStatement.setString(4, medico.getTelefone());
+			preparedStatement.setString(5, medico.getCrm());
+			preparedStatement.setString(6, medico.getCpf());
+			preparedStatement.setString(7, medico.getEspecialidade().getIdEspecialidade());
 			preparedStatement.executeUpdate();
 
 		} catch (Exception e) {
@@ -51,7 +51,7 @@ public class MysqlMedicoDAO implements MedicoDAO {
 	}
 
 	@Override
-	public void remover(Long id) {
+	public void remover(Medico medico) {
 		// TODO Auto-generated method stub
 
 	}
@@ -62,20 +62,21 @@ public class MysqlMedicoDAO implements MedicoDAO {
 		try {
 			Connection conn = dataSource.getConnection();
 			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("select idMedico, nome, sobrenome, telefone, crm, cpf, EspecialidadeId from medico");
+			ResultSet rs = stmt
+					.executeQuery("select idMedico, nome, sobrenome, telefone, crm, cpf, EspecialidadeId from medico");
 			while (rs.next()) {
-				Long id = rs.getLong(1);
+				String id = rs.getString(1);
 				String nome = rs.getString(2);
 				String sobrenome = rs.getString(3);
 				String telefone = rs.getString(4);
 				String crm = rs.getString(5);
 				String cpf = rs.getString(6);
-				Long EspecialidadeId = rs.getLong(7);
-				
+				String EspecialidadeId = rs.getString(7);
+
 				Especialidade especialidade = especialidadeDAO.procurar(EspecialidadeId);
-				
+
 				medicos.add(new Medico(id, nome, sobrenome, telefone, crm, cpf, especialidade));
-				
+
 			}
 			conn.close();
 			stmt.close();
@@ -87,34 +88,34 @@ public class MysqlMedicoDAO implements MedicoDAO {
 	}
 
 	@Override
-	public Medico procurar(Long idMedico) {
+	public Medico procurar(String idMedico) {
 		Medico medico = null;
 		String sql = "select idMedico, nome, sobrenome, telefone, crm, cpf, EspecialidadeId from medico where idMedico = ?";
 		try {
 			Connection conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
-			
-			ps.setLong(1, idMedico);
-			
+
+			ps.setString(1, idMedico);
+
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				Long id = rs.getLong(1);
+				String id = rs.getString(1);
 				String nome = rs.getString(2);
 				String sobrenome = rs.getString(3);
 				String telefone = rs.getString(4);
 				String crm = rs.getString(5);
 				String cpf = rs.getString(6);
-				Long EspecialidadeId = rs.getLong(7);
-				
+				String EspecialidadeId = rs.getString(7);
+
 				Especialidade especialidade = especialidadeDAO.procurar(EspecialidadeId);
-				
+
 				medico = new Medico(id, nome, sobrenome, telefone, crm, cpf, especialidade);
-				
+
 			}
 			rs.close();
 			ps.close();
 			conn.close();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

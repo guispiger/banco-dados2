@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.sql.DataSource;
 
@@ -22,12 +23,15 @@ public class MysqlBairroDAO implements BairroDAO {
 
 	@Override
 	public void inserir(Bairro bairro) {
-		String sql = "insert into bairro (nome) values (?)";
+		String id = UUID.randomUUID().toString();
+		bairro.setId(id);
+		String sql = "insert into bairro (idBairro, nome) values (?,?)";
 		try {
 			Connection conn = dataSource.getConnection();
 			PreparedStatement preparedStatement = conn.prepareStatement(sql);
-
-			preparedStatement.setString(1, bairro.getNome());
+			
+			preparedStatement.setString(1, bairro.getId());
+			preparedStatement.setString(2, bairro.getNome());
 			preparedStatement.executeUpdate();
 
 			conn.close();
@@ -45,7 +49,7 @@ public class MysqlBairroDAO implements BairroDAO {
 			PreparedStatement preparedStatement = conn.prepareStatement(sql);
 
 			preparedStatement.setString(1, bairro.getNome());
-			preparedStatement.setLong(2, bairro.getId());
+			preparedStatement.setString(2, bairro.getId());
 			preparedStatement.executeUpdate();
 
 			conn.close();
@@ -62,7 +66,7 @@ public class MysqlBairroDAO implements BairroDAO {
 			Connection conn = dataSource.getConnection();
 			PreparedStatement preparedStatement = conn.prepareStatement(sql);
 
-			preparedStatement.setLong(1, bairro.getId());
+			preparedStatement.setString(1, bairro.getId());
 			preparedStatement.executeUpdate();
 
 			conn.close();
@@ -81,7 +85,7 @@ public class MysqlBairroDAO implements BairroDAO {
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("select idBairro, nome from bairro");
 			while (rs.next()) {
-				Long id = rs.getLong(1);
+				String id = rs.getString(1);
 				String nome = rs.getString(2);
 				bairros.add(new Bairro(id, nome));
 			}
@@ -94,18 +98,18 @@ public class MysqlBairroDAO implements BairroDAO {
 	}
 
 	@Override
-	public Bairro procurar(Long id) {
+	public Bairro procurar(String id) {
 		Bairro bairro = new Bairro();
 		String sql = "select idBairro, nome from bairro where idBairro=?";
 		try {
 			Connection conn = dataSource.getConnection();
 			PreparedStatement preparedStatement = conn.prepareStatement(sql);
-			preparedStatement.setLong(1, id);
+			preparedStatement.setString(1, id);
 			
 			ResultSet rs = preparedStatement.executeQuery();
 			
 			while (rs.next()) {
-				Long idBairro = rs.getLong(1);
+				String idBairro = rs.getString(1);
 				String nome = rs.getString(2);
 				
 				bairro.setId(idBairro);

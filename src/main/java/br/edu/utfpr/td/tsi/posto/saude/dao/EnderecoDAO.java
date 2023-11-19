@@ -7,14 +7,14 @@ import br.edu.utfpr.td.tsi.posto.saude.modelo.Endereco;
 
 public interface EnderecoDAO {
 
-	public void inserir(Endereco endereco, Long idPaciente);
+	public void inserir(Endereco endereco, String idPaciente);
 
-	public void atualizar(Long idPaciente, Endereco endereco);
+	public void atualizar(String idPaciente, Endereco endereco);
 
-	public void remover(Long id);
+	public void remover(String id);
 	
 	public List<Endereco> listarTodos();
 		
-	public Endereco procurar(Long idPaciente);
+	public Endereco procurarPorPacienteId(String idPaciente);
 
 }

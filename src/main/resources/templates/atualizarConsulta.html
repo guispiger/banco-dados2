@@ -32,7 +32,7 @@
 	<form method="POST" action="atualizarConsulta">
 
 		<label>Paciente:</label>
-		<select name="paciente.id" required>
+		<select name="paciente" required>
 			<option value="">Escolha um paciente</option>
 			<option th:each="paciente : ${pacientes}" th:value="${paciente.id}"
 				th:text="${paciente.nome + ' ' + paciente.sobrenome}" th:selected="
@@ -41,7 +41,7 @@
 		<br>
 
 		<label>Médico:</label>
-		<select name="medico.idMedico" required>
+		<select name="medico" required>
 			<option value="">Escolha uma Médico</option>
 			<option th:each="medico : ${medicos}" th:value="${medico.idMedico}"
 				th:text="${medico.crm + '-' + medico.nome}"
@@ -54,9 +54,8 @@
 
 		<label>Situação:</label>
 		<select name="situacao" required>
-			<option value="agendada">Agendada</option>
-			<option value="cancelada">Cancelada</option>
-			<option value="realizada">Realizada</option>
+			<option th:each="i : ${ {'agendada', 'cancelada', 'realizada'} }" th:value="${i}"
+				th:text="${#strings.capitalize(i)}" th:selected="${consulta.situacao == i}" />
 		</select>
 
 		<input th:value="${consulta.idConsulta}" name="idConsulta" type="hidden">

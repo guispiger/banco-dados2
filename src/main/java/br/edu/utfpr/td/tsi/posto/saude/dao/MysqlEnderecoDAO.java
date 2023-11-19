@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.sql.DataSource;
 
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Bairro;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Endereco;
+import br.edu.utfpr.td.tsi.posto.saude.modelo.Paciente;
 
 @Component
 public class MysqlEnderecoDAO implements EnderecoDAO {
@@ -23,19 +25,25 @@ public class MysqlEnderecoDAO implements EnderecoDAO {
 
 	@Autowired
 	private BairroDAO bairroDAO;
+	
+	@Autowired
+	private PacienteDAO pacienteDAO;
 
 	@Override
-	public void inserir(Endereco endereco, Long idPaciente) {
-		String sql = "insert into endereco (logradouro, numero, cep, BairroID, pacienteID) values (?, ?, ?, ?, ?)";
+	public void inserir(Endereco endereco, String idPaciente) {
+		String id = UUID.randomUUID().toString();
+		endereco.setId(id);
+		String sql = "insert into endereco (idEndereco, logradouro, numero, cep, BairroID, pacienteID) values (?, ?, ?, ?, ?, ?)";
 		try {
 			Connection conn = dataSource.getConnection();
 			PreparedStatement preparedStatement = conn.prepareStatement(sql);
-
-			preparedStatement.setString(1, endereco.getLogradouro());
-			preparedStatement.setInt(2, endereco.getNumero());
-			preparedStatement.setString(3, endereco.getCep());
-			preparedStatement.setLong(4, endereco.getBairro().getId());
-			preparedStatement.setLong(5, idPaciente);
+			
+			preparedStatement.setString(1, endereco.getId());
+			preparedStatement.setString(2, endereco.getLogradouro());
+			preparedStatement.setInt(3, endereco.getNumero());
+			preparedStatement.setString(4, endereco.getCep());
+			preparedStatement.setString(5, endereco.getBairro().getId());
+			preparedStatement.setString(6, idPaciente);
 			preparedStatement.executeUpdate();
 
 			conn.close();
@@ -46,12 +54,12 @@ public class MysqlEnderecoDAO implements EnderecoDAO {
 	}
 
 	@Override
-	public void atualizar(Long idPaciente, Endereco end) {
+	public void atualizar(String idPaciente, Endereco end) {
 		// TODO
 	}
 
 	@Override
-	public void remover(Long idPaciente) {
+	public void remover(String idPaciente) {
 		// TODO
 
 	}
@@ -62,17 +70,20 @@ public class MysqlEnderecoDAO implements EnderecoDAO {
 		try {
 			Connection conn = dataSource.getConnection();
 			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("select idEndereco, logradouro, numero, cep, bairroID from endereco");
+			ResultSet rs = stmt.executeQuery("select idEndereco, logradouro, numero, cep, bairroID, pacienteID from endereco");
 			while (rs.next()) {
-				Long id = rs.getLong(1);
+				String id = rs.getString(1);
 				String logradouro = rs.getString(2);
 				int numero = rs.getInt(3);
 				String cep = rs.getString(4);
-				Long bairroID = rs.getLong(5);
+				String bairroID = rs.getString(5);
+				String pacienteID = rs.getString(6);
 
 				Bairro bairro = bairroDAO.procurar(bairroID);
+				
+				Paciente paciente = pacienteDAO.procurar(pacienteID);
 
-				enderecos.add(new Endereco(id, logradouro, numero, cep, bairro));
+				enderecos.add(new Endereco(id, logradouro, numero, cep, bairro, paciente));
 			}
 			conn.close();
 			stmt.close();
@@ -84,26 +95,28 @@ public class MysqlEnderecoDAO implements EnderecoDAO {
 	}
 
 	@Override
-	public Endereco procurar(Long idPaciente) {
+	public Endereco procurarPorPacienteId(String idPaciente) {
 		Endereco endereco = null;
 		String sql = "select idEndereco, logradouro, numero, cep, bairroID from endereco where pacienteID = ?";
 		try {
 			Connection conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setLong(1, idPaciente);
+			ps.setString(1, idPaciente);
 			
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
-				Long id = rs.getLong(1);
+				String id = rs.getString(1);
 				String logradouro = rs.getString(2);
 				int numero = rs.getInt(3);
 				String cep = rs.getString(4);
-				Long bairroID = rs.getLong(5);
+				String bairroID = rs.getString(5);
 
 				Bairro bairro = bairroDAO.procurar(bairroID);
+				
+			    Paciente paciente = pacienteDAO.procurar(idPaciente);
 
-				endereco = new Endereco(id, logradouro, numero, cep, bairro);
+				endereco = new Endereco(id, logradouro, numero, cep, bairro, paciente);
 
 			}
 			conn.close();

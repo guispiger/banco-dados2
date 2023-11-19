@@ -33,7 +33,7 @@
 
 	<form method="POST" action="cadastrarConsulta">
 		<label>Paciente:</label>
-		<select name="paciente.id" required>
+		<select name="paciente" required>
 			<option value="">Escolha um paciente</option>
 			<option th:each="paciente : ${pacientes}" th:value="${paciente.id}"
 				th:text="${paciente.nome + ' ' + paciente.sobrenome}"></option>
@@ -41,10 +41,10 @@
 		<br>
 
 		<label>Médico:</label>
-		<select name="medico.idMedico" required>
+		<select name="medico" required>
 			<option value="">Escolha uma Médico</option>
 			<option th:each="medico : ${medicos}" th:value="${medico.idMedico}"
-				th:text="${consulta.medico.idMedico == medico.idMedico}"></option>
+				th:text="${medico.crm + '-' + medico.nome}"></option>
 		</select>
 		<br>
 

@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.sql.DataSource;
 
@@ -27,24 +28,20 @@ public class MysqlPacienteDAO implements PacienteDAO {
 	private EnderecoDAO enderecoDAO;
 
 	@Override
-	public Long inserir(Paciente p) {
-		long idPaciente = 0;
-		String sql = "insert into paciente (nome, sobrenome, dataNascimento, telefone) values (?, ?, ?, ?)";
+	public void inserir(Paciente p) {
+		String id = UUID.randomUUID().toString();
+		p.setId(id);
+		String sql = "insert into paciente (idPaciente, nome, sobrenome, dataNascimento, telefone) values (?, ?, ?, ?, ?)";
 		try {
 			Connection conn = dataSource.getConnection();
 			PreparedStatement preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
-			preparedStatement.setString(1, p.getNome());
-			preparedStatement.setString(2, p.getSobrenome());
-			preparedStatement.setDate(3, Date.valueOf(p.getDataNascimento()));
-			preparedStatement.setString(4, p.getTelefone());
+			
+			preparedStatement.setString(1, p.getId());
+			preparedStatement.setString(2, p.getNome());
+			preparedStatement.setString(3, p.getSobrenome());
+			preparedStatement.setDate(4, Date.valueOf(p.getDataNascimento()));
+			preparedStatement.setString(5, p.getTelefone());
 			preparedStatement.executeUpdate();
-
-			ResultSet rs = preparedStatement.getGeneratedKeys();
-
-			while (rs.next()) {
-				idPaciente = rs.getInt(1);
-			}
 
 			conn.close();
 			preparedStatement.close();
@@ -52,16 +49,15 @@ public class MysqlPacienteDAO implements PacienteDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Long.valueOf(idPaciente);
 	}
 
 	@Override
-	public void atualizar(Long id, Paciente p) {
+	public void atualizar(String id, Paciente p) {
 		// TODO
 	}
 
 	@Override
-	public void remover(Long id) {
+	public void remover(Paciente p) {
 		// TODO
 
 	}
@@ -75,13 +71,13 @@ public class MysqlPacienteDAO implements PacienteDAO {
 			ResultSet rs = stmt
 					.executeQuery("select idPaciente, nome, sobrenome, dataNascimento, telefone from paciente");
 			while (rs.next()) {
-				Long id = rs.getLong(1);
+				String id = rs.getString(1);
 				String nome = rs.getString(2);
 				String sobrenome = rs.getString(3);
 				LocalDate datanascimento = rs.getDate(4).toLocalDate();
 				String telefone = rs.getString(5);
 
-				Endereco endereco = enderecoDAO.procurar(id);
+				Endereco endereco = enderecoDAO.procurarPorPacienteId(id);
 
 				pacientes.add(new Paciente(id, nome, sobrenome, datanascimento, telefone, endereco));
 			}
@@ -94,24 +90,24 @@ public class MysqlPacienteDAO implements PacienteDAO {
 	}
 
 	@Override
-	public Paciente procurar(Long id) {
+	public Paciente procurar(String id) {
 		Paciente paciente = null;
 		String sql = "select idPaciente, nome, sobrenome, dataNascimento, telefone from paciente where idPaciente = ?";
 		try {
 			Connection conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setLong(1, id);
+			ps.setString(1, id);
 
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
-				Long idPaciente = rs.getLong(1);
+				String idPaciente = rs.getString(1);
 				String nome = rs.getString(2);
 				String sobrenome = rs.getString(3);
 				LocalDate datanascimento = rs.getDate(4).toLocalDate();
 				String telefone = rs.getString(5);
 
-				Endereco endereco = enderecoDAO.procurar(id);
+				Endereco endereco = enderecoDAO.procurarPorPacienteId(id);
 
 				paciente = new Paciente(idPaciente, nome, sobrenome, datanascimento, telefone, endereco);
 			}

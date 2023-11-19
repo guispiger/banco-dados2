@@ -6,22 +6,40 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 						http://www.springframework.org/schema/tx https://www.springframework.org/schema/tx/spring-tx.xsd
 						http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
-	<bean id="MysqlBairroDAO" primary="true"
+	<bean id="JpaBairroDAO" primary="true"
+		class="br.edu.utfpr.td.tsi.posto.saude.dao.JpaBairroDAO"></bean>
+		
+	<bean id="JpaPacienteDAO" primary="true"
+		class="br.edu.utfpr.td.tsi.posto.saude.dao.JpaPacienteDAO"></bean>
+
+	<bean id="JpaEnderecoDAO" primary="true"
+		class="br.edu.utfpr.td.tsi.posto.saude.dao.JpaEnderecoDAO"></bean>
+		
+	<bean id="JpaMedicoDAO" primary="true"
+		class="br.edu.utfpr.td.tsi.posto.saude.dao.JpaMedicoDAO"></bean>
+		
+	<bean id="JpaEspecialidadeDAO" primary="true"
+		class="br.edu.utfpr.td.tsi.posto.saude.dao.JpaEspecialidadeDAO"></bean>
+		
+	<bean id="JpaConsultaDAO" primary="true"
+		class="br.edu.utfpr.td.tsi.posto.saude.dao.JpaConsultaDAO"></bean>
+
+	<bean id="MysqlBairroDAO" primary="false"
 		class="br.edu.utfpr.td.tsi.posto.saude.dao.MysqlBairroDAO"></bean>
 
-	<bean id="MysqlEnderecoDAO" primary="true"
+	<bean id="MysqlEnderecoDAO" primary="false"
 		class="br.edu.utfpr.td.tsi.posto.saude.dao.MysqlEnderecoDAO"></bean>
 
-	<bean id="MysqlPacienteDAO" primary="true"
+	<bean id="MysqlPacienteDAO" primary="false"
 		class="br.edu.utfpr.td.tsi.posto.saude.dao.MysqlPacienteDAO"></bean>
 
-	<bean id="MysqlMedicoDAO" primary="true"
+	<bean id="MysqlMedicoDAO" primary="false"
 		class="br.edu.utfpr.td.tsi.posto.saude.dao.MysqlMedicoDAO"></bean>
 
-	<bean id="MysqlEspecialidadeDAO" primary="true"
+	<bean id="MysqlEspecialidadeDAO" primary="false"
 		class="br.edu.utfpr.td.tsi.posto.saude.dao.MysqlEspecialidadeDAO"></bean>
 
-	<bean id="MysqlConsultaDAO" primary="true"
+	<bean id="MysqlConsultaDAO" primary="false"
 		class="br.edu.utfpr.td.tsi.posto.saude.dao.MysqlConsultaDAO"></bean>
 
 

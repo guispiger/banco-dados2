@@ -10,9 +10,9 @@ public interface MedicoDAO {
 
 	public void atualizar(Long idEspecialidade, Medico medico);
 
-	public void remover(Long id);
+	public void remover(Medico medico);
 	
 	public List<Medico> listarTodos();
 		
-	public Medico procurar(Long idMedico);
+	public Medico procurar(String idMedico);
 }

@@ -6,14 +6,14 @@ import br.edu.utfpr.td.tsi.posto.saude.modelo.Paciente;
 
 public interface PacienteDAO {
 
-	public Long inserir(Paciente p);
+	public void inserir(Paciente p);
 
-	public void atualizar(Long id, Paciente p);
+	public void atualizar(String id, Paciente p);
 
-	public void remover(Long id);
+	public void remover(Paciente p);
 
 	public List<Paciente> listarTodos();
 	
-	public Paciente procurar(Long id);
+	public Paciente procurar(String id);
 
 }

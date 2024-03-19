@@ -1,11 +1,11 @@
-package br.edu.utfpr.td.tsi.posto.saude.dao;
+package br.edu.utfpr.td.tsi.posto.saude.dao.jpa;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import br.edu.utfpr.td.tsi.posto.saude.dao.repository.EnderecoRepository;
+import br.edu.utfpr.td.tsi.posto.saude.dao.EnderecoDAO;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Endereco;
 
 public class JpaEnderecoDAO implements EnderecoDAO {

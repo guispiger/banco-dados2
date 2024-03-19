@@ -1,4 +1,4 @@
-package br.edu.utfpr.td.tsi.posto.saude.dao;
+package br.edu.utfpr.td.tsi.posto.saude.dao.jpa;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import br.edu.utfpr.td.tsi.posto.saude.dao.repository.MedicoRepository;
+import br.edu.utfpr.td.tsi.posto.saude.dao.MedicoDAO;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Medico;
 
 public class JpaMedicoDAO implements MedicoDAO {

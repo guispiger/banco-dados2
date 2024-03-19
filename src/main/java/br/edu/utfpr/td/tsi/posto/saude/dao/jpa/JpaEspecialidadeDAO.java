@@ -1,10 +1,10 @@
-package br.edu.utfpr.td.tsi.posto.saude.dao;
+package br.edu.utfpr.td.tsi.posto.saude.dao.jpa;
 
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import br.edu.utfpr.td.tsi.posto.saude.dao.repository.EspecialidadeRepository;
+import br.edu.utfpr.td.tsi.posto.saude.dao.EspecialidadeDAO;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Especialidade;
 
 public class JpaEspecialidadeDAO implements EspecialidadeDAO {

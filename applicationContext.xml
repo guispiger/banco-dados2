@@ -7,40 +7,40 @@
 						http://www.springframework.org/schema/tx https://www.springframework.org/schema/tx/spring-tx.xsd
 						http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 	<bean id="JpaBairroDAO" primary="true"
-		class="br.edu.utfpr.td.tsi.posto.saude.dao.JpaBairroDAO"></bean>
+		class="br.edu.utfpr.td.tsi.posto.saude.dao.jpa.JpaBairroDAO"></bean>
 		
 	<bean id="JpaPacienteDAO" primary="true"
-		class="br.edu.utfpr.td.tsi.posto.saude.dao.JpaPacienteDAO"></bean>
+		class="br.edu.utfpr.td.tsi.posto.saude.dao.jpa.JpaPacienteDAO"></bean>
 
 	<bean id="JpaEnderecoDAO" primary="true"
-		class="br.edu.utfpr.td.tsi.posto.saude.dao.JpaEnderecoDAO"></bean>
+		class="br.edu.utfpr.td.tsi.posto.saude.dao.jpa.JpaEnderecoDAO"></bean>
 		
 	<bean id="JpaMedicoDAO" primary="true"
-		class="br.edu.utfpr.td.tsi.posto.saude.dao.JpaMedicoDAO"></bean>
+		class="br.edu.utfpr.td.tsi.posto.saude.dao.jpa.JpaMedicoDAO"></bean>
 		
 	<bean id="JpaEspecialidadeDAO" primary="true"
-		class="br.edu.utfpr.td.tsi.posto.saude.dao.JpaEspecialidadeDAO"></bean>
+		class="br.edu.utfpr.td.tsi.posto.saude.dao.jpa.JpaEspecialidadeDAO"></bean>
 		
 	<bean id="JpaConsultaDAO" primary="true"
-		class="br.edu.utfpr.td.tsi.posto.saude.dao.JpaConsultaDAO"></bean>
+		class="br.edu.utfpr.td.tsi.posto.saude.dao.jpa.JpaConsultaDAO"></bean>
 
 	<bean id="MysqlBairroDAO" primary="false"
-		class="br.edu.utfpr.td.tsi.posto.saude.dao.MysqlBairroDAO"></bean>
+		class="br.edu.utfpr.td.tsi.posto.saude.dao.mysql.MysqlBairroDAO"></bean>
 
 	<bean id="MysqlEnderecoDAO" primary="false"
-		class="br.edu.utfpr.td.tsi.posto.saude.dao.MysqlEnderecoDAO"></bean>
+		class="br.edu.utfpr.td.tsi.posto.saude.dao.mysql.MysqlEnderecoDAO"></bean>
 
 	<bean id="MysqlPacienteDAO" primary="false"
-		class="br.edu.utfpr.td.tsi.posto.saude.dao.MysqlPacienteDAO"></bean>
+		class="br.edu.utfpr.td.tsi.posto.saude.dao.mysql.MysqlPacienteDAO"></bean>
 
 	<bean id="MysqlMedicoDAO" primary="false"
-		class="br.edu.utfpr.td.tsi.posto.saude.dao.MysqlMedicoDAO"></bean>
+		class="br.edu.utfpr.td.tsi.posto.saude.dao.mysql.MysqlMedicoDAO"></bean>
 
 	<bean id="MysqlEspecialidadeDAO" primary="false"
-		class="br.edu.utfpr.td.tsi.posto.saude.dao.MysqlEspecialidadeDAO"></bean>
+		class="br.edu.utfpr.td.tsi.posto.saude.dao.mysql.MysqlEspecialidadeDAO"></bean>
 
 	<bean id="MysqlConsultaDAO" primary="false"
-		class="br.edu.utfpr.td.tsi.posto.saude.dao.MysqlConsultaDAO"></bean>
+		class="br.edu.utfpr.td.tsi.posto.saude.dao.mysql.MysqlConsultaDAO"></bean>
 
 
 	<bean id="dataSource"

@@ -1,4 +1,4 @@
-package br.edu.utfpr.td.tsi.posto.saude.dao;
+package br.edu.utfpr.td.tsi.posto.saude.dao.mysql;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import br.edu.utfpr.td.tsi.posto.saude.dao.EspecialidadeDAO;
 import br.edu.utfpr.td.tsi.posto.saude.modelo.Especialidade;
 
 public class MysqlEspecialidadeDAO implements EspecialidadeDAO {

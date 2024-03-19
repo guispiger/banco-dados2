@@ -1,4 +1,4 @@
-package br.edu.utfpr.td.tsi.posto.saude.dao.repository;
+package br.edu.utfpr.td.tsi.posto.saude.dao.jpa;
 
 import org.springframework.data.repository.CrudRepository;
 
